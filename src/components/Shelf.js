@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import Book from "./Book";
 
-export default class Category extends Component {
+export default class Shelf extends Component {
 
   render() {
-    const { name, books, updateCategory } = this.props
+    const { name, books, updateShelf } = this.props
     return (
       <div className="list-books-content">
         <div>
@@ -16,7 +16,7 @@ export default class Category extends Component {
                     <li key={book.id}>
                         <Book
                             book={book}
-                            updateCategory={updateCategory}
+                            updateShelf={updateShelf}
                         />
                     </li>
                 ))}
