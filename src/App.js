@@ -25,8 +25,16 @@ class BooksApp extends React.Component {
   }
   
   updateCategory = (book, newCategory) => {
+    const categories = this.state.categories;
     BooksAPI.update(book, newCategory).then((response) => {
-      this.update(response);
+      const newCategories = categories.map(category => {
+        category.books = category.books.filter((b)=> b.shelf === category.id);
+        if(category.id === newCategory) {
+          category.books = category.list.concat([book]);
+        }
+        return category;
+      })
+      this.setState({categories: newCategories});
     });
   }
 
@@ -37,7 +45,7 @@ class BooksApp extends React.Component {
       category.books = category.books.concat(filteredBooks);
       return category;
     })
-    this.setState({categories: newCategories})
+    this.setState({categories: newCategories});
   }
 
   componentDidMount() {
@@ -54,7 +62,7 @@ class BooksApp extends React.Component {
           <MyReads updateCategory={this.updateCategory} {...this.state}/>
         )}/>
         <Route exact path='/search' render={() => (
-          <Search/>
+          <Search updateCategory={this.updateCategory}/>
         )}/>
       </div>
     )
