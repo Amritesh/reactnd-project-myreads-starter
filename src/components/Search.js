@@ -31,6 +31,8 @@ export default class Search extends Component {
                     else
                         this.setState({ list: []});
                 });
+            } else{
+                this.setState({ list: []});
             }
         };
     }
