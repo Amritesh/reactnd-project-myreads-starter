@@ -5,7 +5,7 @@ The goal of this project is to mantain a a list of reads. You can search and add
 * Want to Read
 * Read
 
-## TL;DR
+# Installation
 
 To get started developing right away:
 
