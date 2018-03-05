@@ -12,20 +12,22 @@ export default class Search extends Component {
     
     updateQuery = (query) => {
         this.setState({ query: query })
-    
+        let scope = this;
         if (query) {
             BooksAPI.search(query, 20).then((result) => {
                 if(!result.error)
-                    this.setState({ books: result})
+                    scope.setState({books: result, searchErr: false});
                 else
-                this.setState({ books: []})
+                    scope.setState({books: [], searchErr: true});
           });
+        } else{
+            scope.setState({books: [], searchErr: false});
         }
     }
     
     render() {
         const { updateShelf } = this.props;
-        const { query, books } = this.state;
+        const { query, books, searchError } = this.state;
         
         return (
             <div className="search-books">
@@ -43,6 +45,18 @@ export default class Search extends Component {
                         ))}
                     </ol>
                 </div>
+                {searchErr && query && (
+                    <div>
+                        <div>
+                            <h3>No result found. Please try again!</h3>
+                        </div>
+                    </div>
+                )}
+                {!query && (
+                    <div>
+                        <h3>Enter query to search.</h3>
+                    </div>
+                )}
             </div>
         )
     }

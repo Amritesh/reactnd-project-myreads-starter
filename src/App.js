@@ -24,17 +24,22 @@ class BooksApp extends React.Component {
   
   updateShelf = (book, newShelf) => {
     const books = this.state.books;
+    let scope=this;
     BooksAPI.update(book, newShelf).then(() => {
       if (newShelf === 'none'){
         const books = books.filter(b => b.id !== book.id);
-        this.setState({books: books});
+        scope.setState({books: books});
       }
+      BooksAPI.getAll().then((result) => {
+        scope.setState({books: result});
+      });
     });
   }
 
   componentDidMount() {
+    let scope=this;
     BooksAPI.getAll().then((result) => {
-      this.setState({books: result});
+      scope.setState({books: result});
     });
   }
 
